@@ -1,0 +1,587 @@
+﻿[
+  {
+    "id": "card-01",
+    "dificuldade": "facil",
+    "categoria": "Diagnóstico",
+    "resposta": "Lombalgia mecânica inespecífica",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Não apresenta causa estrutural específica identificável.",
+      "2": "O exame neurológico costuma ser normal.",
+      "3": "Não há sinais de alarme associados.",
+      "4": "A dor piora com movimento ou esforço.",
+      "5": "Geralmente tem evolução benigna.",
+      "6": "É a causa mais comum de dor lombar."
+    }
+  },
+  {
+    "id": "card-02",
+    "dificuldade": "facil",
+    "categoria": "Diagnóstico",
+    "resposta": "Radiculopatia (lombociatalgia)",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "A dor segue o trajeto de uma raiz nervosa.",
+      "2": "Pode haver parestesia e déficit sensitivo.",
+      "3": "Costuma irradiar abaixo do joelho.",
+      "4": "Frequentemente é unilateral.",
+      "5": "Está associada à dor ciática.",
+      "6": "É uma causa neurológica de dor lombar."
+    }
+  },
+  {
+    "id": "card-03",
+    "dificuldade": "medio",
+    "categoria": "Diagnóstico",
+    "resposta": "Síndrome da cauda equina",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode cursar com retenção urinária.",
+      "2": "Anestesia em sela é um achado típico.",
+      "3": "Os sintomas podem ser bilaterais.",
+      "4": "Exige avaliação cirúrgica urgente.",
+      "5": "Decorre de compressão neurológica importante.",
+      "6": "É uma emergência associada à lombalgia."
+    }
+  },
+  {
+    "id": "card-04",
+    "dificuldade": "medio",
+    "categoria": "Diagnóstico",
+    "resposta": "Fratura vertebral",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode ocorrer após trauma ou fragilidade óssea.",
+      "2": "A dor costuma ser focal e bem localizada.",
+      "3": "Tem início súbito em muitos casos.",
+      "4": "É mais comum em idosos.",
+      "5": "Osteoporose aumenta o risco.",
+      "6": "É uma causa estrutural importante de dor lombar."
+    }
+  },
+  {
+    "id": "card-05",
+    "dificuldade": "dificil",
+    "categoria": "Diagnóstico",
+    "resposta": "Espondilodiscite",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Envolve infecção do disco e das estruturas vertebrais adjacentes.",
+      "2": "A dor tende a ser contínua e persistente.",
+      "3": "Pode cursar com febre e mal-estar.",
+      "4": "Marcadores inflamatórios costumam estar elevados.",
+      "5": "É uma causa infecciosa de lombalgia.",
+      "6": "Exige investigação além das causas mecânicas habituais."
+    }
+  },
+  {
+    "id": "card-06",
+    "dificuldade": "medio",
+    "categoria": "Diagnóstico",
+    "resposta": "Espondilite anquilosante",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "A sacroileíte é um achado clássico.",
+      "2": "A rigidez matinal costuma ser prolongada.",
+      "3": "Melhora com exercício físico.",
+      "4": "Piora com repouso.",
+      "5": "É mais comum em adultos jovens.",
+      "6": "É uma causa inflamatória de lombalgia."
+    }
+  },
+  {
+    "id": "card-07",
+    "dificuldade": "facil",
+    "categoria": "Diagnóstico",
+    "resposta": "Nefrolitíase",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "A dor pode irradiar para a virilha.",
+      "2": "Hematúria pode estar presente.",
+      "3": "O paciente frequentemente fica inquieto.",
+      "4": "A dor costuma localizar-se em flanco.",
+      "5": "Tem padrão em cólica.",
+      "6": "É uma causa urinária de dor lombar."
+    }
+  },
+  {
+    "id": "card-08",
+    "dificuldade": "facil",
+    "categoria": "Diagnóstico",
+    "resposta": "Pielonefrite",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Giordano positivo é um achado sugestivo.",
+      "2": "Pode haver disúria associada.",
+      "3": "Febre alta e calafrios são frequentes.",
+      "4": "Trata-se de infecção do trato urinário alto.",
+      "5": "A dor pode ser lombar ou em flanco.",
+      "6": "É uma causa infecciosa de dor lombar."
+    }
+  },
+  {
+    "id": "card-09",
+    "dificuldade": "medio",
+    "categoria": "Diagnóstico",
+    "resposta": "Espondilolistese",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Há deslizamento de uma vértebra sobre outra.",
+      "2": "Pode haver step-off palpável no exame.",
+      "3": "Relaciona-se a movimentos repetidos de hiperextensão.",
+      "4": "Pode ocorrer em jovens atletas.",
+      "5": "Costuma causar dor mecânica.",
+      "6": "É uma alteração estrutural da coluna lombar."
+    }
+  },
+  {
+    "id": "card-10",
+    "dificuldade": "dificil",
+    "categoria": "Diagnóstico",
+    "resposta": "Tuberculose vertebral (Doença de Pott)",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode causar deformidade vertebral com gibosidade.",
+      "2": "A evolução costuma ser arrastada.",
+      "3": "Pode haver sudorese noturna e febrícula.",
+      "4": "Emagrecimento é um dado sugestivo.",
+      "5": "É uma infecção vertebral específica.",
+      "6": "Representa uma causa crônica de dor lombar."
+    }
+  },
+  {
+    "id": "card-11",
+    "dificuldade": "dificil",
+    "categoria": "Diagnóstico",
+    "resposta": "Mieloma múltiplo",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode cursar com lesões ósseas líticas.",
+      "2": "Anemia e hipercalcemia podem estar presentes.",
+      "3": "A dor óssea é um achado frequente.",
+      "4": "É mais comum em idosos.",
+      "5": "Trata-se de uma neoplasia hematológica.",
+      "6": "É uma causa secundária importante de dor lombar."
+    }
+  },
+  {
+    "id": "card-12",
+    "dificuldade": "medio",
+    "categoria": "Diagnóstico",
+    "resposta": "Pancreatite",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "A dor inicia no epigástrio e irradia para o dorso.",
+      "2": "Náuseas e vômitos são comuns.",
+      "3": "Acomete órgão retroperitoneal",
+      "4": "Pode simular dor lombar posterior.",
+      "5": "É uma causa visceral de dor referida.",
+      "6": "Não tem origem musculoesquelética."
+    }
+  },
+  {
+    "id": "card-13",
+    "dificuldade": "facil",
+    "categoria": "Exame físico",
+    "resposta": "Teste de Lasègue",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "A elevação da perna estendida reproduz dor irradiada.",
+      "2": "É usado na avaliação de ciática.",
+      "3": "Explora tensão radicular.",
+      "4": "É realizado no membro inferior.",
+      "5": "Faz parte do exame físico neurológico.",
+      "6": "É uma manobra clássica na lombalgia com irradiação."
+    }
+  },
+  {
+    "id": "card-14",
+    "dificuldade": "medio",
+    "categoria": "Exame físico",
+    "resposta": "Teste de Lasègue Cruzado",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "A elevação do lado sadio provoca dor no lado afetado.",
+      "2": "Tem maior especificidade para compressão radicular.",
+      "3": "É usado na investigação de ciática.",
+      "4": "Compara lados durante o exame.",
+      "5": "É uma variante do Lasègue.",
+      "6": "É uma manobra do exame físico."
+    }
+  },
+  {
+    "id": "card-15",
+    "dificuldade": "facil",
+    "categoria": "Exame físico",
+    "resposta": "Manobra de Giordano",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Consiste em punho-percussão lombar.",
+      "2": "Quando positiva, sugere acometimento renal.",
+      "3": "É pesquisada em região de flanco.",
+      "4": "É um sinal útil na dor lombar de origem renal.",
+      "5": "Pode estar alterada em infecção urinária alta.",
+      "6": "Faz parte do exame físico abdominal e urinário."
+    }
+  },
+  {
+    "id": "card-16",
+    "dificuldade": "facil",
+    "categoria": "Sinal de alarme",
+    "resposta": "Anestesia em sela",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Acomete a sensibilidade do períneo.",
+      "2": "Também pode atingir a face interna das nádegas.",
+      "3": "É altamente sugestiva de compressão neurológica grave.",
+      "4": "Exige atenção imediata.",
+      "5": "É uma red flag neurológica.",
+      "6": "É um achado sensitivo importante na lombalgia."
+    }
+  },
+  {
+    "id": "card-17",
+    "dificuldade": "facil",
+    "categoria": "Sinal de alarme",
+    "resposta": "Febre",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Representa elevação da temperatura corporal.",
+      "2": "Pode ser aferida ou referida",
+      "3": "Sugere possibilidade de causa infecciosa.",
+      "4": "Afasta a interpretação de lombalgia puramente mecânica.",
+      "5": "Deve chamar atenção na triagem.",
+      "6": "É um sinal sistêmico."
+    }
+  },
+  {
+    "id": "card-18",
+    "dificuldade": "facil",
+    "categoria": "Fator de risco",
+    "resposta": "Osteoporose",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Deixa o osso mais frágil.",
+      "2": "Relaciona-se à redução da massa óssea.",
+      "3": "Predispõe a fraturas por compressão vertebral.",
+      "4": "Acomete frequentemente mulheres.",
+      "5": "É mais comum em idosos.",
+      "6": "É um importante fator de risco na dor lombar."
+    }
+  },
+  {
+    "id": "card-19",
+    "dificuldade": "facil",
+    "categoria": "Exame físico",
+    "resposta": "Escoliose",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Representa desvio lateral da coluna.",
+      "2": "Envolve curvatura anormal da coluna.",
+      "3": "É percebida na inspeção postural.",
+      "4": "Altera o alinhamento corporal.",
+      "5": "Pode gerar assimetria do tronco.",
+      "6": "É um achado do exame físico."
+    }
+  },
+  {
+    "id": "card-20",
+    "dificuldade": "facil",
+    "categoria": "Imagem",
+    "resposta": "Radiografia (de coluna lombar)",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Utiliza radiação ionizante.",
+      "2": "Mostra melhor estruturas ósseas do que tecidos moles.",
+      "3": "Baixa sensibilidade para hernia de disco",
+      "4": "Tem custo relativamente baixo.",
+      "5": "É uma opção inicial de imagem em alguns casos.",
+      "6": "É útil para avaliar alinhamento e fraturas."
+    }
+  },
+  {
+    "id": "card-21",
+    "dificuldade": "facil",
+    "categoria": "Imagem",
+    "resposta": "Ressonância magnética de coluna lombar",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Não utiliza radiação ionizante",
+      "2": "Alta sensibilidade para discos, raízes nervosas e medula",
+      "3": "Não está indicada na lombalgia aguda inespecífica sem sinais de alarme",
+      "4": "Método de escolha para avaliação de tecidos moles",
+      "5": "Fornece imagens detalhadas em múltiplos planos.",
+      "6": "É especialmente útil em suspeita neurológica ou infecciosa."
+    }
+  },
+  {
+    "id": "card-22",
+    "dificuldade": "medio",
+    "categoria": "Imagem",
+    "resposta": "Cintilografia óssea",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Detecta áreas de maior atividade metabólica óssea.",
+      "2": "Alta sensibilidade para detectar alterações precoces",
+      "3": "Pode ajudar na pesquisa de metástases.",
+      "4": "É útil em lesões ocultas ou múltiplas.",
+      "5": "Avalia o esqueleto de forma global.",
+      "6": "É um exame funcional de imagem."
+    }
+  },
+  {
+    "id": "card-23",
+    "dificuldade": "facil",
+    "categoria": "Imagem",
+    "resposta": "Ultrassonografia",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "É útil na avaliação de rins e vias urinárias.",
+      "2": "Pode investigar causas abdominais ou renais de dor.",
+      "3": "Não utiliza radiação.",
+      "4": "É um exame de imagem em tempo real.",
+      "5": "É amplamente disponível.",
+      "6": "Ajuda na investigação de dor lombar não musculoesquelética."
+    }
+  },
+  {
+    "id": "card-24",
+    "dificuldade": "facil",
+    "categoria": "Imagem",
+    "resposta": "TC de abdome e vias urinárias",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "É muito útil na pesquisa de cálculo urinário.",
+      "2": "Avalia abdome e trato urinário com detalhamento.",
+      "3": "Pode ser realizada com ou sem contraste.",
+      "4": "Utiliza tomografia computadorizada.",
+      "5": "Pode esclarecer dor em flanco ou lombar de origem urinária.",
+      "6": "É um exame de imagem seccional."
+    }
+  },
+  {
+    "id": "card-25",
+    "dificuldade": "facil",
+    "categoria": "Laboratório",
+    "resposta": "Hemograma",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Permite avaliar anemia e leucocitose.",
+      "2": "Inclui hemoglobina, leucócitos e outras séries celulares.",
+      "3": "É obtido por amostra de sangue.",
+      "4": "É um exame laboratorial básico.",
+      "5": "Pode sugerir infecção ou doença sistêmica.",
+      "6": "Ajuda na investigação clínica da lombalgia."
+    }
+  },
+  {
+    "id": "card-26",
+    "dificuldade": "facil",
+    "categoria": "Laboratório",
+    "resposta": "PCR",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Significa proteína C reativa.",
+      "2": "Costuma elevar-se em processos inflamatórios agudos.",
+      "3": "É usado para atividade inflamatória.",
+      "4": "É um marcador inespecífico.",
+      "5": "Pode aumentar em infecções.",
+      "6": "É um exame laboratorial."
+    }
+  },
+  {
+    "id": "card-27",
+    "dificuldade": "facil",
+    "categoria": "Laboratório",
+    "resposta": "VHS",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Significa velocidade de hemossedimentação.",
+      "2": "Pode sugerir inflamação ou processo crônico.",
+      "3": "Se negativo é menos provável uma infecção ou neoplasia ativa",
+      "4": "Tem baixa especificidade.",
+      "5": "É um marcador laboratorial de inflamação.",
+      "6": "Ajuda na investigação de causas secundárias."
+    }
+  },
+  {
+    "id": "card-28",
+    "dificuldade": "medio",
+    "categoria": "Laboratório",
+    "resposta": "HLA-B27",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "É um marcador imunogenético associado a espondiloartrites.",
+      "2": "Pode reforçar suspeita de dor lombar inflamatória.",
+      "3": "É mais considerado em pacientes jovens.",
+      "4": "Não confirma diagnóstico isoladamente.",
+      "5": "Relaciona-se a doenças reumatológicas.",
+      "6": "É um exame de laboratório especializado."
+    }
+  },
+  {
+    "id": "card-29",
+    "dificuldade": "facil",
+    "categoria": "Sinal de alarme",
+    "resposta": "Déficit neurológico",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode manifestar-se por perda de força.",
+      "2": "Indica comprometimento neural.",
+      "3": "Reflexos podem estar diminuídos ou abolidos.",
+      "4": "Também pode incluir alteração sensitiva.",
+      "5": "É detectado no exame neurológico.",
+      "6": "É um importante sinal de alarme."
+    }
+  },
+  {
+    "id": "card-30",
+    "dificuldade": "facil",
+    "categoria": "Farmacologia",
+    "resposta": "Anti-inflamatório",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Também é conhecido pela sigla AINE.",
+      "2": "Pode aliviar dor e inflamação.",
+      "3": "É usado com frequência em quadros agudos.",
+      "4": "Tem papel sintomático.",
+      "5": "É uma opção medicamentosa comum.",
+      "6": "Faz parte do tratamento da lombalgia."
+    }
+  },
+  {
+    "id": "card-31",
+    "dificuldade": "facil",
+    "categoria": "Conduta",
+    "resposta": "Orientação postural",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Envolve ajustes de ergonomia no dia a dia.",
+      "2": "Orienta proteção da coluna em atividades habituais.",
+      "3": "Tem foco educativo e preventivo.",
+      "4": "Pode reduzir sobrecarga mecânica.",
+      "5": "Não depende de medicação.",
+      "6": "É uma medida não farmacológica."
+    }
+  },
+  {
+    "id": "card-32",
+    "dificuldade": "facil",
+    "categoria": "Conduta",
+    "resposta": "Conduta expectante",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Também é chamada de watchful waiting.",
+      "2": "Não exige exame imediato em todos os casos.",
+      "3": "Baseia-se na evolução do quadro.",
+      "4": "É adequada quando não há urgência nem sinais de alarme.",
+      "5": "Envolve observação clínica com reavaliação.",
+      "6": "É uma estratégia de manejo clínico."
+    }
+  },
+  {
+    "id": "card-33",
+    "dificuldade": "facil",
+    "categoria": "Farmacologia",
+    "resposta": "Relaxante muscular",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode ser útil quando há espasmo ou contratura muscular.",
+      "2": "Geralmente é usado por curto prazo.",
+      "3": "Tem papel principalmente sintomático.",
+      "4": "Não trata a causa estrutural da dor.",
+      "5": "É uma opção medicamentosa adjunta.",
+      "6": "Pode ser usado em lombalgia aguda."
+    }
+  },
+  {
+    "id": "card-34",
+    "dificuldade": "facil",
+    "categoria": "Farmacologia",
+    "resposta": "Analgésicos comuns",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "São usados para dor leve a moderada.",
+      "2": "Podem ser primeira linha em muitos casos.",
+      "3": "Não incluem opioides nesta formulação genérica.",
+      "4": "Têm finalidade sintomática.",
+      "5": "São recursos terapêuticos frequentes.",
+      "6": "Fazem parte do tratamento medicamentoso."
+    }
+  },
+  {
+    "id": "card-35",
+    "dificuldade": "facil",
+    "categoria": "Conduta",
+    "resposta": "Manutenção de atividades",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Evita repouso excessivo no leito.",
+      "2": "Favorece recuperação funcional.",
+      "3": "Estimula mobilização precoce e segura.",
+      "4": "É recomendada em muitos quadros mecânicos.",
+      "5": "Ajuda a manter autonomia.",
+      "6": "É uma orientação importante de reabilitação."
+    }
+  },
+  {
+    "id": "card-36",
+    "dificuldade": "facil",
+    "categoria": "Exame físico",
+    "resposta": "Reflexo patelar",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Ajuda a avaliar integridade da raiz L4.",
+      "2": "A resposta envolve o quadríceps.",
+      "3": "É pesquisado com martelo neurológico.",
+      "4": "É testado na região do joelho.",
+      "5": "É um reflexo tendíneo.",
+      "6": "Faz parte do exame neurológico dos membros inferiores."
+    }
+  },
+  {
+    "id": "card-37",
+    "dificuldade": "facil",
+    "categoria": "Fator de risco",
+    "resposta": "Sinal de alerta",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Também pode ser chamado de red flag.",
+      "2": "Muda a prioridade da investigação clínica.",
+      "3": "Sugere maior gravidade potencial.",
+      "4": "É importante na triagem inicial.",
+      "5": "Indica possibilidade de causa secundária relevante.",
+      "6": "É um conceito central na avaliação da lombalgia."
+    }
+  },
+  {
+    "id": "card-38",
+    "dificuldade": "facil",
+    "categoria": "Fator de risco",
+    "resposta": "Rigidez matinal",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Melhora com movimento ao longo do dia.",
+      "2": "É percebida especialmente ao acordar.",
+      "3": "Pode ocorrer em espondiloartrites.",
+      "4": "É um sintoma sugestivo de padrão inflamatório.",
+      "5": "Não é típica de dor puramente mecânica.",
+      "6": "É um dado importante da anamnese."
+    }
+  },
+  {
+    "id": "card-39",
+    "dificuldade": "medio",
+    "categoria": "Fator de risco",
+    "resposta": "Imunossupressão",
+    "temaPrincipal": "Lombalgia",
+    "dicas": {
+      "1": "Pode estar relacionada a HIV ou uso de corticoides.",
+      "2": "Reduz a capacidade de defesa do organismo.",
+      "3": "Aumenta o risco de infecções vertebrais e sistêmicas.",
+      "4": "É considerada uma red flag clínica.",
+      "5": "Exige maior atenção diagnóstica.",
+      "6": "É um fator de risco relevante na lombalgia."
+    }
+  }
+]
