@@ -14,6 +14,7 @@ export function CardTile({ slot, isActive, onClick, onShowAnswer }: CardTileProp
   const card = getCardDetails(slot.cardId)
   const backgroundImage = slot.status === 'virada' ? cartaVerso : cartaFrente
   const isFirstReveal = slot.status === 'ativa' && slot.dicasReveladas === 1
+  const displayNumber = card?.id.replace('card-', '') ?? String(slot.slotId)
 
   const visibleHintKeys = Array.from({ length: slot.dicasReveladas }, (_, index) => String(6 - index))
   const revealedHintSet = new Set(visibleHintKeys)
@@ -26,7 +27,7 @@ export function CardTile({ slot, isActive, onClick, onShowAnswer }: CardTileProp
         onClick={onClick}
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <span className="card-position">#{slot.slotId}</span>
+        <span className="card-position">#{displayNumber}</span>
         {slot.status === 'virada' ? (
           <div className="card-face card-face-back">
             <span className="card-status-badge">Pronta</span>
@@ -35,7 +36,6 @@ export function CardTile({ slot, isActive, onClick, onShowAnswer }: CardTileProp
           <div className="card-face card-face-front">
             <div className="card-header-chip">
               <span className="card-header-label">{card?.categoria ?? 'Lombalgia'}</span>
-              <strong>{slot.pontosAtuais} pts</strong>
             </div>
 
             <div className="card-hints-overlay" aria-label="Dicas reveladas na carta">
