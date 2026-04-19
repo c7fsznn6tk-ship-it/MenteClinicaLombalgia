@@ -87,6 +87,9 @@ export type AnswerModalState = {
   isOpen: boolean
   slotId: number | null
   revealAnswer: boolean
+  step: 'confirmarGrupoDaVez' | 'selecionarGrupo' | 'perguntarExplicacao'
+  selectedGroupId: string | null
+  explanationOpen: boolean
 }
 
 export type ChallengeSession = {

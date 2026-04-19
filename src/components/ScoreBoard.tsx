@@ -18,10 +18,12 @@ export function ScoreBoard({ groups, currentGroupId }: ScoreBoardProps) {
           <article
             key={group.id}
             className={`score-card ${currentGroupId === group.id ? 'is-current' : ''}`}
+            tabIndex={0}
           >
             <h3>{group.nome}</h3>
-            <strong>{group.pontuacao} pts</strong>
-            <div className="score-meta">
+            <strong className="score-points">{group.pontuacao}</strong>
+            <span className="score-points-label">pontos</span>
+            <div className="score-hover-details">
               <span>Acertos: {group.acertos}</span>
               <span>Desafios: {group.desafiosUsados}/2</span>
               <span>Altos: {group.acertosAltos}</span>

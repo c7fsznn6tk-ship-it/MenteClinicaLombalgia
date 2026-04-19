@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+﻿import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import cardsData from '../data/cards.json'
 import challengeQuestionsData from '../data/challengeQuestions.json'
@@ -21,14 +21,26 @@ import {
   getChallengeOptions,
   getDefaultSettings,
   getInitialChallengeTimes,
+  normalizeCards,
+  sanitizeImportedCards,
   sanitizeImportedSnapshot,
 } from '../utils/gameUtils'
 import { CARD_CLICK_THROTTLE_MS, STORAGE_KEY } from '../utils/constants'
 
-const allCards = cardsData as Card[]
+const baseCards = normalizeCards(cardsData as Card[])
 const allChallengeQuestions = challengeQuestionsData as ChallengeQuestion[]
 
+type FinalizeCorrectAnswerResult = {
+  slotId: number
+  groupId: string
+  slot: PersistedSnapshot['board'][number]
+  currentGroup: PersistedSnapshot['groups'][number]
+  replacementCard: Card | null
+  totalEarned: number
+}
+
 type GameStore = PersistedSnapshot & {
+  customCards: Card[] | null
   toast: ToastMessage | null
   openSettingsModal: boolean
   initializeMatch: (groupNames: string[], settings: MatchSettings) => void
@@ -43,7 +55,13 @@ type GameStore = PersistedSnapshot & {
   updateSettings: (partial: Partial<MatchSettings>) => void
   openAnswerModal: (slotId: number) => void
   closeAnswerModal: () => void
-  confirmCorrectGroup: (groupId: string) => void
+  selectCorrectGroup: (groupId: string) => void
+  continueWithoutExplanation: () => void
+  openAnswerExplanation: () => void
+  closeAnswerExplanation: () => void
+  setCustomCards: (cards: Card[]) => void
+  resetCustomCards: () => void
+  importCustomCards: (cards: unknown) => boolean
   startChallenge: () => void
   cancelChallenge: () => void
   setChallengeParticipants: (challengerGroupId: string, challengedGroupId: string) => void
@@ -66,6 +84,9 @@ const initialAnswerModal: AnswerModalState = {
   isOpen: false,
   slotId: null,
   revealAnswer: false,
+  step: 'confirmarGrupoDaVez',
+  selectedGroupId: null,
+  explanationOpen: false,
 }
 
 const defaultChallengeSession: ChallengeSession = {
@@ -107,21 +128,61 @@ function toast(message: string, tone: ToastMessage['tone'] = 'info'): ToastMessa
   }
 }
 
+function getResolvedCardsFromState(state: { customCards: Card[] | null; settings: MatchSettings }) {
+  const resolvedCards = state.customCards ?? baseCards
+  return state.settings.demoMode ? resolvedCards.slice(0, 24) : resolvedCards
+}
+
+function finalizeCorrectAnswer(
+  state: PersistedSnapshot & { customCards: Card[] | null },
+): FinalizeCorrectAnswerResult | null {
+  const slotId = state.answerModal.slotId
+  const groupId = state.answerModal.selectedGroupId
+  if (slotId === null || !groupId) {
+    return null
+  }
+
+  const slot = state.board.find((item) => item.slotId === slotId)
+  const currentGroup = state.groups.find((group) => group.id === groupId)
+  if (!slot || !currentGroup) {
+    return null
+  }
+
+  const sourceCards = getResolvedCardsFromState(state)
+  const replacementCard = drawReplacementCard(sourceCards, state.usedCardIds)
+  const firstHintBonus = state.settings.bonus.primeiraDica && slot.pontosAtuais === 6 ? 1 : 0
+  const sequenceBonus =
+    state.settings.bonus.sequencia && currentGroup.acertosConsecutivos >= 1 ? 1 : 0
+  const totalEarned = slot.pontosAtuais + firstHintBonus + sequenceBonus
+
+  return {
+    slotId,
+    groupId,
+    slot,
+    currentGroup,
+    replacementCard,
+    totalEarned,
+  }
+}
+
 export const useGameStore = create<GameStore>()(
   persist(
     (set, get) => ({
       ...initialState,
+      customCards: null,
       toast: null,
       openSettingsModal: false,
 
       initializeMatch: (groupNames, settings) => {
-        const sourceCards = settings.demoMode ? allCards.slice(0, 24) : allCards
+        const sourceCards = settings.demoMode
+          ? (get().customCards ?? baseCards).slice(0, 24)
+          : get().customCards ?? baseCards
         const { board, usedCardIds } = buildBoard(sourceCards)
         set({
           status: 'playing',
           groups: createInitialGroups(groupNames),
           settings,
-          turnIndex: 0,
+          turnIndex: -1,
           board,
           usedCardIds,
           consumedChallengeQuestionIds: [],
@@ -141,14 +202,20 @@ export const useGameStore = create<GameStore>()(
       },
 
       revealNextHint: (slotId) => {
+        const state = get()
         const now = Date.now()
-        const board = get().board.map((slot) => {
+        let revealWasValid = false
+
+        const board = state.board.map((slot) => {
           if (slot.slotId !== slotId || slot.status === 'resolvida') return slot
           if (slot.lastClickTimestamp && now - slot.lastClickTimestamp < CARD_CLICK_THROTTLE_MS) {
             return slot
           }
+          if (slot.dicasReveladas >= 6) return slot
 
           const dicasReveladas = Math.min(6, slot.dicasReveladas + 1)
+          revealWasValid = dicasReveladas !== slot.dicasReveladas
+
           return {
             ...slot,
             status: 'ativa' as const,
@@ -158,7 +225,13 @@ export const useGameStore = create<GameStore>()(
           }
         })
 
-        set({ board, activeSlotId: slotId })
+        const nextTurnIndex = revealWasValid
+          ? state.turnIndex < 0
+            ? 0
+            : (state.turnIndex + 1) % Math.max(1, state.groups.length)
+          : state.turnIndex
+
+        set({ board, activeSlotId: slotId, turnIndex: nextTurnIndex })
       },
 
       selectCard: (slotId) => set({ activeSlotId: slotId }),
@@ -273,27 +346,29 @@ export const useGameStore = create<GameStore>()(
             isOpen: true,
             slotId,
             revealAnswer: true,
+            step: 'confirmarGrupoDaVez',
+            selectedGroupId: null,
+            explanationOpen: false,
           },
         }),
 
       closeAnswerModal: () => set({ answerModal: initialAnswerModal }),
 
-      confirmCorrectGroup: (groupId) => {
+      selectCorrectGroup: (groupId) =>
+        set((state) => ({
+          answerModal: {
+            ...state.answerModal,
+            step: 'perguntarExplicacao',
+            selectedGroupId: groupId,
+          },
+        })),
+
+      continueWithoutExplanation: () => {
         const state = get()
-        const slotId = state.answerModal.slotId
-        if (slotId === null) return
+        const result = finalizeCorrectAnswer(state)
+        if (!result) return
 
-        const slot = state.board.find((item) => item.slotId === slotId)
-        const currentGroup = state.groups.find((group) => group.id === groupId)
-        if (!slot || !currentGroup) return
-
-        const sourceCards = state.settings.demoMode ? allCards.slice(0, 24) : allCards
-        const replacementCard = drawReplacementCard(sourceCards, state.usedCardIds)
-        const firstHintBonus =
-          state.settings.bonus.primeiraDica && slot.pontosAtuais === 6 ? 1 : 0
-        const sequenceBonus =
-          state.settings.bonus.sequencia && currentGroup.acertosConsecutivos >= 1 ? 1 : 0
-        const totalEarned = slot.pontosAtuais + firstHintBonus + sequenceBonus
+        const { slotId, groupId, slot, currentGroup, replacementCard, totalEarned } = result
 
         set({
           groups: state.groups.map((group) => {
@@ -343,6 +418,51 @@ export const useGameStore = create<GameStore>()(
         if (!replacementCard) {
           get().finishMatch()
         }
+      },
+
+      openAnswerExplanation: () =>
+        set((state) => ({
+          answerModal: {
+            ...state.answerModal,
+            explanationOpen: true,
+          },
+        })),
+
+      closeAnswerExplanation: () => {
+        const state = get()
+        if (!state.answerModal.explanationOpen) return
+
+        set((current) => ({
+          answerModal: {
+            ...current.answerModal,
+            explanationOpen: false,
+          },
+        }))
+
+        get().continueWithoutExplanation()
+      },
+
+      setCustomCards: (cards) =>
+        set({
+          customCards: normalizeCards(cards),
+          toast: toast('Banco de cartas personalizado salvo.', 'success'),
+        }),
+
+      resetCustomCards: () =>
+        set({
+          customCards: null,
+          toast: toast('Banco de cartas restaurado para o padrão original.', 'info'),
+        }),
+
+      importCustomCards: (cards) => {
+        if (!sanitizeImportedCards(cards)) {
+          return false
+        }
+        set({
+          customCards: normalizeCards(cards),
+          toast: toast('Banco de cartas importado com sucesso.', 'success'),
+        })
+        return true
       },
 
       startChallenge: () => {
@@ -566,13 +686,19 @@ export const useGameStore = create<GameStore>()(
         const state = get()
         const groupNames = state.groups.map((group) => group.nome)
         if (groupNames.length < 2) {
-          set({ ...initialState, toast: null, openSettingsModal: false })
+          set({ ...initialState, customCards: state.customCards, toast: null, openSettingsModal: false })
           return
         }
         get().initializeMatch(groupNames, state.settings)
       },
 
-      resetAll: () => set({ ...initialState, toast: null, openSettingsModal: false }),
+      resetAll: () =>
+        set((state) => ({
+          ...initialState,
+          customCards: state.customCards,
+          toast: null,
+          openSettingsModal: false,
+        })),
 
       exportSnapshot: () => {
         const state = get()
@@ -594,10 +720,11 @@ export const useGameStore = create<GameStore>()(
 
       importSnapshot: (snapshot) => {
         if (!sanitizeImportedSnapshot(snapshot)) return false
-        set({
+        set((state) => ({
           ...snapshot,
+          customCards: state.customCards,
           toast: toast('Estado importado com sucesso.', 'success'),
-        })
+        }))
         return true
       },
 
@@ -621,13 +748,23 @@ export const useGameStore = create<GameStore>()(
         answerModal: state.answerModal,
         challenge: state.challenge,
         finalSummary: state.finalSummary,
+        customCards: state.customCards,
       }),
     },
   ),
 )
 
+export function getBaseCards() {
+  return baseCards
+}
+
+export function getResolvedCards() {
+  const state = useGameStore.getState()
+  return state.customCards ?? baseCards
+}
+
 export function getCardDetails(cardId: string) {
-  return allCards.find((card) => card.id === cardId)
+  return getResolvedCards().find((card) => card.id === cardId)
 }
 
 export function getChallengeQuestionDetails(questionId: string) {

@@ -8,9 +8,10 @@ type CardTileProps = {
   isActive: boolean
   onClick: () => void
   onShowAnswer: () => void
+  onExpand: () => void
 }
 
-export function CardTile({ slot, isActive, onClick, onShowAnswer }: CardTileProps) {
+export function CardTile({ slot, isActive, onClick, onShowAnswer, onExpand }: CardTileProps) {
   const card = getCardDetails(slot.cardId)
   const backgroundImage = slot.status === 'virada' ? cartaVerso : cartaFrente
   const isFirstReveal = slot.status === 'ativa' && slot.dicasReveladas === 1
@@ -63,9 +64,14 @@ export function CardTile({ slot, isActive, onClick, onShowAnswer }: CardTileProp
       </button>
 
       {slot.status === 'ativa' ? (
-        <button type="button" className="card-answer-button" onClick={onShowAnswer}>
-          Mostrar resposta
-        </button>
+        <div className="card-action-row">
+          <button type="button" className="card-answer-button" onClick={onShowAnswer}>
+            Mostrar resposta
+          </button>
+          <button type="button" className="card-zoom-button" onClick={onExpand} title="Ampliar carta">
+            🔍
+          </button>
+        </div>
       ) : (
         <div className="card-answer-placeholder" aria-hidden="true" />
       )}

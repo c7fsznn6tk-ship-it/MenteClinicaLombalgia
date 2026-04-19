@@ -14,6 +14,7 @@ import {
 } from './constants'
 
 export const hintOrder = ['6', '5', '4', '3', '2', '1'] as const
+export const editorHintOrder = ['1', '2', '3', '4', '5', '6'] as const
 
 export function shuffleArray<T>(items: T[]): T[] {
   const array = [...items]
@@ -138,6 +139,48 @@ export function sanitizeImportedSnapshot(
     typeof snapshot.answerModal === 'object' &&
     typeof snapshot.challenge === 'object'
   )
+}
+
+function isDifficulty(value: unknown): value is Card['dificuldade'] {
+  return value === 'facil' || value === 'medio' || value === 'dificil'
+}
+
+export function sanitizeImportedCards(payload: unknown): payload is Card[] {
+  if (!Array.isArray(payload)) return false
+
+  return payload.every((card) => {
+    if (!card || typeof card !== 'object') return false
+    const candidate = card as Partial<Card>
+    const dicas = candidate.dicas as Card['dicas'] | undefined
+
+    return (
+      typeof candidate.id === 'string' &&
+      isDifficulty(candidate.dificuldade) &&
+      typeof candidate.categoria === 'string' &&
+      typeof candidate.resposta === 'string' &&
+      candidate.temaPrincipal === 'Lombalgia' &&
+      typeof dicas === 'object' &&
+      dicas !== null &&
+      editorHintOrder.every((key) => typeof dicas[key] === 'string')
+    )
+  })
+}
+
+export function normalizeCards(cards: Card[]): Card[] {
+  return cards.map((card) => ({
+    ...card,
+    categoria: card.categoria.trim(),
+    resposta: card.resposta.trim(),
+    temaPrincipal: 'Lombalgia',
+    dicas: {
+      '1': card.dicas['1'].trim(),
+      '2': card.dicas['2'].trim(),
+      '3': card.dicas['3'].trim(),
+      '4': card.dicas['4'].trim(),
+      '5': card.dicas['5'].trim(),
+      '6': card.dicas['6'].trim(),
+    },
+  }))
 }
 
 export function getInitialChallengeTimes(settings: MatchSettings) {

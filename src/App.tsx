@@ -1,15 +1,18 @@
-﻿import { useEffect } from 'react'
+﻿import { useEffect, useState } from 'react'
 import type React from 'react'
 import { AnswerModal } from './components/AnswerModal'
 import { ChallengeModal } from './components/ChallengeModal'
+import { ExpandedCardModal } from './components/ExpandedCardModal'
+import { ExplanationModal } from './components/ExplanationModal'
 import { FinalRanking } from './components/FinalRanking'
 import { GameBoard } from './components/GameBoard'
 import { ModeratorControls } from './components/ModeratorControls'
+import { PenaltyConfirmModal } from './components/PenaltyConfirmModal'
 import { ScoreBoard } from './components/ScoreBoard'
 import { SettingsModal } from './components/SettingsModal'
 import { SetupScreen } from './components/SetupScreen'
 import { Toast } from './components/Toast'
-import { useGameStore } from './store/useGameStore'
+import { getBaseCards, getResolvedCards, useGameStore } from './store/useGameStore'
 import { GAME_TITLE } from './utils/constants'
 
 function App() {
@@ -33,7 +36,14 @@ function App() {
     applyManualPenaltyToCurrentGroup,
     openAnswerModal,
     closeAnswerModal,
-    confirmCorrectGroup,
+    selectCorrectGroup,
+    continueWithoutExplanation,
+    openAnswerExplanation,
+    closeAnswerExplanation,
+    customCards,
+    setCustomCards,
+    resetCustomCards,
+    importCustomCards,
     startChallenge,
     cancelChallenge,
     setChallengeParticipants,
@@ -51,8 +61,14 @@ function App() {
     setOpenSettingsModal,
   } = useGameStore()
 
-  const currentGroup = groups[turnIndex]
+  const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(false)
+  const [zoomedSlotId, setZoomedSlotId] = useState<number | null>(null)
+
+  const currentGroup = turnIndex >= 0 ? groups[turnIndex] ?? null : null
   const answerCard = board.find((slot) => slot.slotId === answerModal.slotId) ?? null
+  const zoomedCard = board.find((slot) => slot.slotId === zoomedSlotId) ?? null
+  const resolvedCards = getResolvedCards()
+  const baseCards = getBaseCards()
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -102,6 +118,31 @@ function App() {
     event.target.value = ''
   }
 
+  function handleConfirmCurrentGroupAnswer() {
+    if (!currentGroup) return
+    selectCorrectGroup(currentGroup.id)
+  }
+
+  function handleRejectCurrentGroupAnswer() {
+    useGameStore.setState((state) => ({
+      answerModal: {
+        ...state.answerModal,
+        step: 'selecionarGrupo',
+        selectedGroupId: null,
+      },
+    }))
+  }
+
+  function handleOpenPenaltyModal() {
+    if (!currentGroup) return
+    setIsPenaltyModalOpen(true)
+  }
+
+  function handleConfirmPenalty() {
+    applyManualPenaltyToCurrentGroup()
+    setIsPenaltyModalOpen(false)
+  }
+
   if (status === 'setup') {
     return (
       <main className="app-shell">
@@ -130,7 +171,7 @@ function App() {
         <div className="topbar-meta">
           <div className="turn-card">
             <span>Grupo da vez</span>
-            <strong>{currentGroup?.nome ?? 'Sem grupo'}</strong>
+            <strong>{currentGroup?.nome ?? 'Aguardando primeira dica'}</strong>
           </div>
         </div>
       </header>
@@ -140,14 +181,16 @@ function App() {
       <GameBoard
         board={board}
         activeSlotId={activeSlotId}
+        currentGroupName={currentGroup?.nome ?? null}
         onCardClick={handleCardClick}
         onShowAnswer={(slotId) => openAnswerModal(slotId)}
+        onExpandCard={(slotId) => setZoomedSlotId(slotId)}
       />
 
       <ModeratorControls
         onAdvanceTurn={() => advanceTurn()}
         onRegisterError={registerErrorForCurrentGroup}
-        onApplyManualPenalty={applyManualPenaltyToCurrentGroup}
+        onApplyManualPenalty={handleOpenPenaltyModal}
         onStartChallenge={startChallenge}
         onFinish={finishMatch}
         onRestart={restartMatch}
@@ -158,11 +201,31 @@ function App() {
       />
 
       <AnswerModal
-        isOpen={answerModal.isOpen}
+        state={answerModal}
         activeCard={answerCard}
         groups={groups}
+        currentGroup={currentGroup}
         onClose={closeAnswerModal}
-        onConfirm={confirmCorrectGroup}
+        onConfirmCurrentGroup={handleConfirmCurrentGroupAnswer}
+        onRejectCurrentGroup={handleRejectCurrentGroupAnswer}
+        onSelectGroup={selectCorrectGroup}
+        onShowExplanation={openAnswerExplanation}
+        onContinueWithoutExplanation={continueWithoutExplanation}
+      />
+
+      <ExpandedCardModal isOpen={zoomedSlotId !== null} slot={zoomedCard} onClose={() => setZoomedSlotId(null)} />
+
+      <ExplanationModal
+        isOpen={answerModal.explanationOpen}
+        activeCard={answerCard}
+        onClose={closeAnswerExplanation}
+      />
+
+      <PenaltyConfirmModal
+        isOpen={isPenaltyModalOpen}
+        groupName={currentGroup?.nome ?? null}
+        onConfirm={handleConfirmPenalty}
+        onClose={() => setIsPenaltyModalOpen(false)}
       />
 
       <ChallengeModal
@@ -178,8 +241,14 @@ function App() {
       <SettingsModal
         isOpen={openSettingsModal}
         settings={settings}
+        cards={resolvedCards}
+        baseCards={baseCards}
+        hasCustomCards={Boolean(customCards)}
         onClose={() => setOpenSettingsModal(false)}
         onSave={updateSettings}
+        onSaveCards={setCustomCards}
+        onResetCards={resetCustomCards}
+        onImportCards={importCustomCards}
       />
     </main>
   )
